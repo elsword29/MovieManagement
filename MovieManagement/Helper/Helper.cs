@@ -10,7 +10,7 @@ namespace MovieManagement.Helper
         {
             var builder = new ConfigurationBuilder()
                          .SetBasePath(Directory.GetCurrentDirectory())
-                         .AddJsonFile("appSetting.json", true, true);
+                         .AddJsonFile("appSetting.json");
             IConfiguration configuration = builder.Build();
             var connectionString = configuration.GetConnectionString("Connection");
             return connectionString;
