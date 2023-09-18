@@ -68,14 +68,39 @@ namespace MovieManagement.Service.MovieServices
             return movie;
         }
 
-        private void ShowMovieById()
+        private Movie ShowMovieById()
         {
             int id = base.FindId();
             var movie = GetMovieById(id);
             context.Entry(movie).Reference(movie => movie.Director).Load();
+            context.Entry(movie).Collection(movie => movie.Reviews).Load();
             Console.WriteLine($"{movie.Id} - {movie.Name} - {movie.Director.Name} - {movie.Country} - {movie.ReleaseDate}\n");
+            return movie;
         }
 
+        private void SeeComment(Movie movie)
+        {
+            string seeCommentOption = base.SeeCommentOption();
+            if (seeCommentOption.Equals("Y"))
+            {
+                foreach (var review in movie.Reviews)
+                {
+                    Console.WriteLine($"{review.Content}\n");
+                }
+            }
+        }
+
+        private void AddComment(Movie movie)
+        {
+            string addCommentOption = base.AddCommentOption();
+            if (addCommentOption.Equals("Y"))
+            {
+                var review = base.AddReview();
+                movie.Reviews.Add(review);
+                unitOfWork.ReviewRepository.Add(review);
+                unitOfWork.SaveChange();
+            }
+        }
         public void MovieManagement()
         {
             int choice = 0;
@@ -91,7 +116,9 @@ namespace MovieManagement.Service.MovieServices
                             GetAllMovie();
                             break;
                         case 2:
-                            ShowMovieById();
+                            var movie = ShowMovieById();
+                            SeeComment(movie);
+                            AddComment(movie);
                             break;
                         case 3:
                             AddNewMovie();

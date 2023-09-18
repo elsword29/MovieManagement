@@ -89,5 +89,26 @@ namespace MovieManagement.Service.MovieServices
             Console.WriteLine("=====================================");
             Console.Write("User choice: ");
         }
+
+        protected string SeeCommentOption()
+        {
+            Console.WriteLine("Do you want to see comment ? (Y/N)");
+            string option = Console.ReadLine().ToUpper();
+            return option;
+        }
+        protected string AddCommentOption()
+        {
+            Console.WriteLine("Do you want to add comment ? (Y/N)");
+            string option = Console.ReadLine().ToUpper();
+            return option;
+        }
+
+        protected Review AddReview()
+        {
+            Review review = new Review();
+            Console.WriteLine("Enter your review: ");
+            review.Content = Console.ReadLine();
+            return review;
+        }
     }
 }

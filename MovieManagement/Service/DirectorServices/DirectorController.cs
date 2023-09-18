@@ -36,7 +36,8 @@ namespace MovieManagement.Service.DirectorServices
             var list = _unitOfWork.DirectorRepository.GetAll();
             foreach (var director in list)
             {
-                Console.WriteLine($"{director.Id} - {director.Name}\n");
+                context.Entry(director).Collection(director => director.Movies).Load();
+                Console.WriteLine($"{director.Id} - {director.Name} - Has {director.Movies.Count} movies\n");
             }
         }
 
@@ -58,7 +59,8 @@ namespace MovieManagement.Service.DirectorServices
         {
             int id = base.FindId();
             var director = GetById(id);
-            Console.WriteLine($"{director.Id} - {director.Name}");
+            context.Entry(director).Collection(director => director.Movies).Load();
+            Console.WriteLine($"{director.Id} - {director.Name} - Has {director.Movies.Count} movies");
         }
 
         public void DirectorManagement()
