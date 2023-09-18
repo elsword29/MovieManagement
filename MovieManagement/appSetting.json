@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "Connection": "Data Source = KHANHS; Database = MovieManagementVersion3; Trusted_Connection = True; TrustServerCertificate = True"
+  }
+}
