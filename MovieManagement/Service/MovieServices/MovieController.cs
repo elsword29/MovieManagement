@@ -1,4 +1,5 @@
-﻿using MovieManagement.DataAccess.UnitOfWork;
+﻿using MovieManagement.DataAccess;
+using MovieManagement.DataAccess.UnitOfWork;
 using MovieManagement.Model;
 
 namespace MovieManagement.Service.MovieServices
@@ -6,9 +7,11 @@ namespace MovieManagement.Service.MovieServices
     public class MovieController : MovieMenu
     {
         private readonly IUnitOfWork unitOfWork;
-        public MovieController(IUnitOfWork _unitOfWork)
+        private readonly AppDbContext context;
+        public MovieController(IUnitOfWork _unitOfWork, AppDbContext _context)
         {
             unitOfWork = _unitOfWork;
+            context = _context;
         }
 
 
@@ -17,6 +20,7 @@ namespace MovieManagement.Service.MovieServices
             var list = unitOfWork.MovieRepository.GetAll();
             foreach (var movie in list)
             {
+                context.Entry(movie).Reference(movie => movie.Director).Load();
                 Console.WriteLine($"{movie.Id} - {movie.Name} - {movie.Director.Name} - {movie.Country} - {movie.ReleaseDate}\n");
             }
         }
@@ -68,6 +72,7 @@ namespace MovieManagement.Service.MovieServices
         {
             int id = base.FindId();
             var movie = GetMovieById(id);
+            context.Entry(movie).Reference(movie => movie.Director).Load();
             Console.WriteLine($"{movie.Id} - {movie.Name} - {movie.Director.Name} - {movie.Country} - {movie.ReleaseDate}\n");
         }
 

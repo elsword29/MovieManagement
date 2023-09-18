@@ -6,8 +6,8 @@ using MovieManagement.Service.MovieServices;
 
 var context = Helper.GetContext();
 IUnitOfWork unitOfWork = new UnitOfWork(context);
-DirectorController directorController = new DirectorController(unitOfWork);
-MovieController movieController = new MovieController(unitOfWork);
+DirectorController directorController = new DirectorController(unitOfWork, context);
+MovieController movieController = new MovieController(unitOfWork, context);
 int mainChoice = 0;
 do
 {

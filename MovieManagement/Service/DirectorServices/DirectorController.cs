@@ -1,4 +1,5 @@
-﻿using MovieManagement.DataAccess.UnitOfWork;
+﻿using MovieManagement.DataAccess;
+using MovieManagement.DataAccess.UnitOfWork;
 using MovieManagement.Model;
 
 namespace MovieManagement.Service.DirectorServices
@@ -6,9 +7,11 @@ namespace MovieManagement.Service.DirectorServices
     public class DirectorController : DirectorMenu
     {
         private readonly IUnitOfWork _unitOfWork;
-        public DirectorController(IUnitOfWork unitOfWork)
+        private readonly AppDbContext context;
+        public DirectorController(IUnitOfWork unitOfWork, AppDbContext _context)
         {
             _unitOfWork = unitOfWork;
+            context = _context;
         }
 
         private void AddDirector()
